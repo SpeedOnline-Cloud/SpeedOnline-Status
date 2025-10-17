@@ -1,0 +1,171 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>服务器监控面板</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/styles.css">
+    <script defer src="assets/app.js"></script>
+</head>
+<body>
+    <header class="app-header">
+        <div class="wrapper">
+            <div class="brand">
+                <i class="fas fa-microchip"></i>
+                <span>服务器监控面板</span>
+            </div>
+            <p class="subtitle">SpeedOnline 节点监控</p>
+        </div>
+    </header>
+
+    <main class="main">
+        <section class="summary-grid">
+            <article class="summary-card total">
+                <div class="summary-icon"><i class="fas fa-layer-group"></i></div>
+                <div class="summary-details">
+                    <span class="summary-label">节点总数</span>
+                    <span class="summary-value" id="totalServers">0</span>
+                </div>
+            </article>
+            <article class="summary-card online">
+                <div class="summary-icon"><i class="fas fa-circle-check"></i></div>
+                <div class="summary-details">
+                    <span class="summary-label">在线节点</span>
+                    <span class="summary-value" id="onlineServers">0</span>
+                </div>
+            </article>
+            <article class="summary-card offline">
+                <div class="summary-icon"><i class="fas fa-circle-xmark"></i></div>
+                <div class="summary-details">
+                    <span class="summary-label">离线节点</span>
+                    <span class="summary-value" id="offlineServers">0</span>
+                </div>
+            </article>
+        </section>
+        <section class="metrics-grid">
+            <article class="metric-card metric-cpu">
+                <header>
+                    <span class="metric-icon"><i class="fas fa-microchip"></i></span>
+                    <span class="metric-label">平均 CPU 使用率</span>
+                </header>
+                <div class="metric-value" id="avgCpuUsage">--</div>
+            </article>
+            <article class="metric-card metric-memory">
+                <header>
+                    <span class="metric-icon"><i class="fas fa-memory"></i></span>
+                    <span class="metric-label">平均内存使用率</span>
+                </header>
+                <div class="metric-value" id="avgMemoryUsage">--</div>
+            </article>
+            <article class="metric-card metric-disk">
+                <header>
+                    <span class="metric-icon"><i class="fas fa-hdd"></i></span>
+                    <span class="metric-label">平均磁盘使用率</span>
+                </header>
+                <div class="metric-value" id="avgDiskUsage">--</div>
+            </article>
+        </section>
+
+        <section class="panel filters">
+            <div class="panel-header">
+                <div>
+                    <h2>监控筛选</h2>
+                    <p>按区域或名称快速定位需要关注的节点</p>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="filter-grid">
+                    <div class="filter-group">
+                        <label>快速搜索</label>
+                        <div class="search-input">
+                            <i class="fas fa-magnifying-glass"></i>
+                            <input type="search" id="searchInput" placeholder="按节点名称搜索...">
+                        </div>
+                    </div>
+                    <div class="filter-group">
+                        <label>区域筛选</label>
+                        <div class="region-list" id="regionList">
+                            <button type="button" class="filter-chip is-active" data-region="all">
+                                <i class="fas fa-globe-asia"></i>
+                                全部
+                            </button>
+                            <button type="button" class="filter-chip" data-region="香港">
+                                <i class="fas fa-location-dot"></i>
+                                香港
+                            </button>
+                            <button type="button" class="filter-chip" data-region="上海">
+                                <i class="fas fa-location-dot"></i>
+                                上海
+                            </button>
+                            <button type="button" class="filter-chip" data-region="北京">
+                                <i class="fas fa-location-dot"></i>
+                                北京
+                            </button>
+                            <button type="button" class="filter-chip" data-region="海外">
+                                <i class="fas fa-location-dot"></i>
+                                海外
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="panel table-panel">
+            <div class="panel-header">
+                <div>
+                    <h2>节点详情</h2>
+                    <p>CPU、内存、磁盘和在线状态</p>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div id="statusAlert" class="alert alert-success">
+                    <i class="fas fa-check-circle"></i>
+                    <span>所有节点均正常运行</span>
+                </div>
+                <div class="table-wrapper">
+                    <table id="serverTable">
+                        <thead>
+                            <tr>
+                                <th class="sortable" data-sort="name">节点名称</th>
+                                <th class="sortable" data-sort="cpu">CPU</th>
+                                <th class="sortable" data-sort="memory">内存</th>
+                                <th class="sortable" data-sort="disk">磁盘</th>
+                                <th class="sortable" data-sort="status">状态</th>
+                            </tr>
+                        </thead>
+                        <tbody id="serverTableBody">
+                            <tr>
+                                <td colspan="5" class="empty-row">正在等待数据...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="table-footer">
+                    <div class="table-meta">
+                        <label>
+                            每页显示
+                            <select class="page-size-selector">
+                                <option value="10">10</option>
+                                <option value="20" selected>20</option>
+                                <option value="50">50</option>
+                            </select>
+                        </label>
+                        <span>合计 <strong id="totalCount">0</strong> 条数据</span>
+                    </div>
+                    <div class="pagination-controls" id="paginationControls"></div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        Copyright ©2023-2026 SpeedOnline. All rights reserved.
+    </footer>
+</body>
+</html>

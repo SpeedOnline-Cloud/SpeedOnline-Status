@@ -1,0 +1,42 @@
+[
+  {
+    "name": "展示服务器-香港",
+    "cpu": 13.3,
+    "memory": 76.4,
+    "disk": 44.5,
+    "last_update": "2025-10-17 14:22:59",
+    "status": "online"
+  },
+  {
+    "name": "展示服务器-上海",
+    "cpu": 9.8,
+    "memory": 65.2,
+    "disk": 70.1,
+    "last_update": "2025-10-17 14:22:45",
+    "status": "online"
+  },
+  {
+    "name": "展示服务器-北京",
+    "cpu": 11.5,
+    "memory": 73.2,
+    "disk": 42.5,
+    "last_update": "2025-10-17 14:22:59",
+    "status": "online"
+  },
+  {
+    "name": "展示服务器-海外",
+    "cpu": 15.7,
+    "memory": 80.1,
+    "disk": 55.3,
+    "last_update": "2025-10-17 14:22:50",
+    "status": "offline"
+  },
+  {
+    "name": "展示服务器-海外",
+    "cpu": 12.4,
+    "memory": 68.9,
+    "disk": 60.2,
+    "last_update": "2025-10-17 14:22:55",
+    "status": "online"
+  }
+]

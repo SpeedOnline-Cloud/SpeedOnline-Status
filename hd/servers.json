@@ -1,0 +1,17 @@
+﻿[
+    {
+        "name": "example-password-server",
+        "ip": "127.0.0.1",
+        "port": 22,
+        "username": "your-ssh-username",
+        "password": "your-ssh-password"
+    },
+    {
+        "name": "example-key-server",
+        "ip": "127.0.0.1",
+        "port": 22,
+        "username": "your-ssh-username",
+        "key_path": "/.ssh/id_rsa",
+        "passphrase": ""
+    }
+]
